@@ -1,10 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MvcMovie.Models;
+using PTAP.Infrastructure;
 using PTAP.Infrastructure.Data;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<KanyeContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("KanyeContext") ?? throw new InvalidOperationException("Connection string 'KanyeContext' not found.")));
+builder.Services.AddTransient<HttpClient>();
+builder.Services.AddTransient<KanyeClient>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
