@@ -10,7 +10,7 @@ namespace PTAP.Core.Models
 {
     public class Quote
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Required, JsonPropertyName("quote")]
         public string QuoteText { get; set; }
