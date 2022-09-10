@@ -15,9 +15,5 @@ namespace PTAP.Core.Models
         [Required, JsonPropertyName("quote")]
         public string QuoteText { get; set; }
 
-        public Quote(string quoteText)
-        {
-            QuoteText = quoteText;
-        }
     }
 }

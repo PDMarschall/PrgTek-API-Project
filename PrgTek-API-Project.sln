@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTAP.Web", "PTAP.Web\PTAP.Web.csproj", "{BB4A2195-5D53-409E-990C-88F04EA0A23C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PTAP.Core", "PTAP.Core\PTAP.Core.csproj", "{786F8304-B66C-4D1C-A1D3-E92BDDF6F220}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTAP.Core", "PTAP.Core\PTAP.Core.csproj", "{786F8304-B66C-4D1C-A1D3-E92BDDF6F220}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PTAP.Infrastructure", "PTAP.Infrastructure\PTAP.Infrastructure.csproj", "{3D1F4BFF-3E03-4FA0-A958-EBEF373E2680}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTAP.Infrastructure", "PTAP.Infrastructure\PTAP.Infrastructure.csproj", "{3D1F4BFF-3E03-4FA0-A958-EBEF373E2680}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PTAP.API", "PTAP.API\PTAP.API.csproj", "{D0C34E3A-DF45-445A-A150-6A653844DAE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTAP.API", "PTAP.API\PTAP.API.csproj", "{D0C34E3A-DF45-445A-A150-6A653844DAE3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTAP.Web", "PTAP.Web\PTAP.Web.csproj", "{55401E2D-91A0-4A3E-B907-582BB253A9BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BB4A2195-5D53-409E-990C-88F04EA0A23C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB4A2195-5D53-409E-990C-88F04EA0A23C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB4A2195-5D53-409E-990C-88F04EA0A23C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB4A2195-5D53-409E-990C-88F04EA0A23C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{786F8304-B66C-4D1C-A1D3-E92BDDF6F220}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{786F8304-B66C-4D1C-A1D3-E92BDDF6F220}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{786F8304-B66C-4D1C-A1D3-E92BDDF6F220}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{D0C34E3A-DF45-445A-A150-6A653844DAE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0C34E3A-DF45-445A-A150-6A653844DAE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0C34E3A-DF45-445A-A150-6A653844DAE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55401E2D-91A0-4A3E-B907-582BB253A9BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55401E2D-91A0-4A3E-B907-582BB253A9BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55401E2D-91A0-4A3E-B907-582BB253A9BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55401E2D-91A0-4A3E-B907-582BB253A9BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
