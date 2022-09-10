@@ -15,5 +15,8 @@ namespace PTAP.Core.Models
         [Required, JsonPropertyName("quote")]
         public string QuoteText { get; set; }
 
+        [JsonPropertyName("rating"), Range(1, 5)]
+        public int Rating { get; set; }
+
     }
 }
