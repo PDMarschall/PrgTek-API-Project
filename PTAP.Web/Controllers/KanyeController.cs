@@ -34,7 +34,16 @@ namespace PTAP.Web.Controllers
         public async Task<IActionResult> DownloadList()
         {
             await SerializeQuotesForDownload();
-            return View();
+
+            var path = @"C:\Users\PDMar\Source\Repos\PDMarschall\PrgTek-API-Project\PTAP.Web\Quote_List.json";
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            return File(memory, "application/json", Path.GetFileName(path));
         }
 
         private async Task GetAndDisplayQuote()
@@ -58,17 +67,6 @@ namespace PTAP.Web.Controllers
             using FileStream createStream = System.IO.File.Create("Quote_List.json");
             await JsonSerializer.SerializeAsync(createStream, tempList);
             await createStream.DisposeAsync();
-
-            FileInfo attributes = new FileInfo("Quote_List.json");
-            var fileLength = attributes.Length;
-
-            Response.Clear();
-            Response.ContentType = "application/json";
-            Response.ContentLength = fileLength;            
-            Response.Headers.Add("Content-Disposition", "attachment");
-
-            await Response.SendFileAsync("Quote_List.json");
-            await Response.CompleteAsync();            
         }
-}
     }
+}
