@@ -18,7 +18,6 @@ namespace PTAP.Infrastructure
         {
             _httpClient = http;
             ConfigureClient();
-            RequestQuote();
         }
 
         public void RequestQuote()
@@ -33,8 +32,11 @@ namespace PTAP.Infrastructure
 
         private async Task Run()
         {
+            if (_httpClient.BaseAddress != null)
+            {
             Quote quote = await GetQuoteAsync(_httpClient.BaseAddress.ToString());
             Quote = quote;
+            }
         }
 
         private async Task<Quote> GetQuoteAsync(string path)
