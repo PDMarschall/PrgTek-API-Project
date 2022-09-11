@@ -40,6 +40,11 @@ namespace PTAP.Web.Controllers
             return File(fileContents, "application/json", Path.GetFileName(path));
         }
 
+        public async Task<IActionResult> History()
+        {
+            return View(await _context.Quote.ToListAsync());
+        }
+
         private async Task GetAndDisplayQuote()
         {
             if (_kanyeClient.Quote != null)
