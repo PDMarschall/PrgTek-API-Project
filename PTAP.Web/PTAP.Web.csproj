@@ -19,4 +19,6 @@
     <ProjectReference Include="..\PTAP.Infrastructure\PTAP.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
+
 </Project>

@@ -4,7 +4,5 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
 <blockquote>@ViewBag.CurrentQuote</blockquote>
-<a asp-action="Index">New Quote</a>
+<input type="button" value="More Wisdom" onclick="location.href='@Url.Action("Index", "Kanye")'" />

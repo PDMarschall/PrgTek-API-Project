@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
+using NuGet.Protocol;
 using PTAP.Core.Models;
 using PTAP.Infrastructure;
 using PTAP.Infrastructure.Data;
@@ -24,6 +27,18 @@ namespace PTAP.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+            await GetAndDisplayQuote();
+            return View();
+        }
+
+        public async Task<IActionResult> DownloadList()
+        {
+            await SerializeQuotesForDownload();
+            return View();
+        }
+
+        private async Task GetAndDisplayQuote()
+        {
             if (_kanyeClient.Quote != null)
             {
                 ViewBag.CurrentQuote = _kanyeClient.Quote.QuoteText;
@@ -34,130 +49,24 @@ namespace PTAP.Web.Controllers
             {
                 ViewBag.CurrentQuote = "Quote could not be retrieved from source.";
             }
-
-            return View();
         }
 
-        public async Task<IActionResult> Details(int? id)
+        private async Task SerializeQuotesForDownload()
         {
-            if (id == null || _context.Quote == null)
-            {
-                return NotFound();
-            }
+            List<Quote> tempList = _context.Quote.ToList();
 
-            var quote = await _context.Quote
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (quote == null)
-            {
-                return NotFound();
-            }
+            using FileStream createStream = System.IO.File.Create("Quote_List.json");
+            await JsonSerializer.SerializeAsync(createStream, tempList);
+            await createStream.DisposeAsync();
 
-            return View(quote);
-        }
+            FileInfo attributes = new FileInfo("Quote_List.json");
+            var length = attributes.Length;
+            
 
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,QuoteText")] Quote quote)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(quote);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(quote);
-        }
-
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Quote == null)
-            {
-                return NotFound();
-            }
-
-            var quote = await _context.Quote.FindAsync(id);
-            if (quote == null)
-            {
-                return NotFound();
-            }
-            return View(quote);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,QuoteText")] Quote quote)
-        {
-            if (id != quote.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(quote);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!QuoteExists(quote.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(quote);
-        }
-
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Quote == null)
-            {
-                return NotFound();
-            }
-
-            var quote = await _context.Quote
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (quote == null)
-            {
-                return NotFound();
-            }
-
-            return View(quote);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Quote == null)
-            {
-                return Problem("Entity set 'KanyeContext.Quote'  is null.");
-            }
-            var quote = await _context.Quote.FindAsync(id);
-            if (quote != null)
-            {
-                _context.Quote.Remove(quote);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool QuoteExists(int id)
-        {
-            return (_context.Quote?.Any(e => e.Id == id)).GetValueOrDefault();
+            Response.ContentType = "application/json";
+            Response.ContentLength = length;
+            Response.Headers.Add("content-disposition", "attachment; filename=Quotes_List.json");
+            await Response.SendFileAsync("Quote_List.json");            
         }
     }
 }
