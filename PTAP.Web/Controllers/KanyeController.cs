@@ -35,7 +35,7 @@ namespace PTAP.Web.Controllers
         {
             string path = GetPath();
 
-            MemoryStream fileContents = await SerializeQuotesForDownloadAsync(path);           
+            MemoryStream fileContents = await SerializeQuotesForDownloadAsync(path);
 
             return File(fileContents, "application/json", Path.GetFileName(path));
         }
@@ -56,25 +56,28 @@ namespace PTAP.Web.Controllers
 
         private async Task<MemoryStream> SerializeQuotesForDownloadAsync(string path)
         {
-            
             List<Quote> tempList = _context.Quote.ToList();
 
-            using FileStream createStream = System.IO.File.Create(path);
-            await JsonSerializer.SerializeAsync(createStream, tempList);
-            await createStream.DisposeAsync();
+            using (FileStream createStream = System.IO.File.Create(path))
+            {
+                await JsonSerializer.SerializeAsync(createStream, tempList);
+                await createStream.DisposeAsync();
+            };
 
             MemoryStream memory = new MemoryStream();
+
             using (FileStream stream = new FileStream(path, FileMode.Open))
             {
                 await stream.CopyToAsync(memory);
+                memory.Position = 0;
             }
-            memory.Position = 0;
+
             return memory;
         }
 
         private string GetPath()
         {
-            return Path.Combine(Environment.CurrentDirectory, @"wwwroot/files/", "Quotes_List.json");
+            return Path.Combine(Environment.CurrentDirectory, @"wwwroot/files/", "Quote_List.json");
         }
     }
 }
