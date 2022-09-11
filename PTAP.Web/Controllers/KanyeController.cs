@@ -24,9 +24,17 @@ namespace PTAP.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            ViewBag.CurrentQuote = _kanyeClient.Quote.QuoteText;
-            _context.Add(_kanyeClient.Quote);
-            await _context.SaveChangesAsync();
+            if (_kanyeClient.Quote != null)
+            {
+                ViewBag.CurrentQuote = _kanyeClient.Quote.QuoteText;
+                _context.Add(_kanyeClient.Quote);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                ViewBag.CurrentQuote = "Quote could not be retrieved from source.";
+            }
+
             return View();
         }
 
@@ -142,14 +150,14 @@ namespace PTAP.Web.Controllers
             {
                 _context.Quote.Remove(quote);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool QuoteExists(int id)
         {
-          return (_context.Quote?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Quote?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
