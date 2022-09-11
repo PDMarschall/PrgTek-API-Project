@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PTAP.Core.Models;
+using PTAP.Infrastructure;
 using PTAP.Infrastructure.Data;
 
 namespace PTAP.Web.Controllers
@@ -13,21 +14,22 @@ namespace PTAP.Web.Controllers
     public class KanyeController : Controller
     {
         private readonly KanyeContext _context;
+        private readonly KanyeClient _kanyeClient;
 
-        public KanyeController(KanyeContext context)
+        public KanyeController(KanyeContext context, KanyeClient kanye)
         {
             _context = context;
+            _kanyeClient = kanye;
         }
 
-        // GET: Kanye
         public async Task<IActionResult> Index()
         {
-              return _context.Quote != null ? 
-                          View(await _context.Quote.ToListAsync()) :
-                          Problem("Entity set 'KanyeContext.Quote'  is null.");
+            ViewBag.CurrentQuote = _kanyeClient.Quote.QuoteText;
+            _context.Add(_kanyeClient.Quote);
+            await _context.SaveChangesAsync();
+            return View();
         }
 
-        // GET: Kanye/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Quote == null)
@@ -45,15 +47,11 @@ namespace PTAP.Web.Controllers
             return View(quote);
         }
 
-        // GET: Kanye/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Kanye/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,QuoteText")] Quote quote)
@@ -67,7 +65,6 @@ namespace PTAP.Web.Controllers
             return View(quote);
         }
 
-        // GET: Kanye/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Quote == null)
@@ -83,9 +80,6 @@ namespace PTAP.Web.Controllers
             return View(quote);
         }
 
-        // POST: Kanye/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,QuoteText")] Quote quote)
@@ -118,7 +112,6 @@ namespace PTAP.Web.Controllers
             return View(quote);
         }
 
-        // GET: Kanye/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Quote == null)
@@ -136,7 +129,6 @@ namespace PTAP.Web.Controllers
             return View(quote);
         }
 
-        // POST: Kanye/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -12,15 +12,13 @@ namespace PTAP.Infrastructure
     public class KanyeClient
     {
         private readonly HttpClient _httpClient;
-        public List<Quote> Quotes { get; set; }
+        public Quote Quote { get; set; }
 
         public KanyeClient(HttpClient http)
         {
-            Quotes = new List<Quote>();
-
             _httpClient = http;
             ConfigureClient();
-            Run().GetAwaiter().GetResult();
+            RequestQuote();
         }
 
         public void RequestQuote()
@@ -36,7 +34,7 @@ namespace PTAP.Infrastructure
         private async Task Run()
         {
             Quote quote = await GetQuoteAsync(_httpClient.BaseAddress.ToString());
-            Quotes.Add(quote);
+            Quote = quote;
         }
 
         private async Task<Quote> GetQuoteAsync(string path)

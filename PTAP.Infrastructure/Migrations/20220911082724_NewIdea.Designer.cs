@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PTAP.Infrastructure.Data;
 
@@ -10,9 +11,10 @@ using PTAP.Infrastructure.Data;
 namespace PTAP.Infrastructure.Migrations
 {
     [DbContext(typeof(KanyeContext))]
-    partial class KanyeContextModelSnapshot : ModelSnapshot
+    [Migration("20220911082724_NewIdea")]
+    partial class NewIdea
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
