@@ -61,12 +61,14 @@ namespace PTAP.Web.Controllers
 
             FileInfo attributes = new FileInfo("Quote_List.json");
             var length = attributes.Length;
-            
 
+            Response.Clear();
             Response.ContentType = "application/json";
-            Response.ContentLength = length;
+            Response.ContentLength = length;            
             Response.Headers.Add("content-disposition", "attachment; filename=Quotes_List.json");
-            await Response.SendFileAsync("Quote_List.json");            
+
+            await Response.SendFileAsync("Quote_List.json");
+            await Response.CompleteAsync();            
         }
     }
 }
