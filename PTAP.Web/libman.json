@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "typed.js@2.0.12",
+      "destination": "wwwroot/lib/typed.js/"
+    }
+  ]
+}
