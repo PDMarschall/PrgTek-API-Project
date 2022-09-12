@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -63,12 +64,14 @@ namespace PTAP.Web.Controllers
         {
             List<Quote> tempList = _context.Quote.ToList();
 
-            using (FileStream createStream = System.IO.File.Create(path))
-            {
-                await JsonSerializer.SerializeAsync(createStream, tempList);
-                await createStream.DisposeAsync();
-            };
+            await CreateQuoteJsonAsync(tempList, path);
+            MemoryStream fileContents = await CopyFileToMemoryAsync(path);
 
+            return fileContents;
+        }
+
+        private async Task<MemoryStream> CopyFileToMemoryAsync(string path)
+        {
             MemoryStream memory = new MemoryStream();
 
             using (FileStream stream = new FileStream(path, FileMode.Open))
@@ -78,6 +81,15 @@ namespace PTAP.Web.Controllers
             }
 
             return memory;
+        }
+
+        private async Task CreateQuoteJsonAsync(List<Quote> tempList, string path)
+        {
+            using (FileStream createStream = System.IO.File.Create(path))
+            {
+                await JsonSerializer.SerializeAsync(createStream, tempList);
+                await createStream.DisposeAsync();
+            };
         }
 
         private string GetPath()
