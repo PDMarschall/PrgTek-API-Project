@@ -2,8 +2,13 @@
     ViewData["Title"] = "Index";
 }
 <div class="center">
+    <img class="kanye-image" src="https://localhost:7219/KanyeAPI" />
+</div>
+
+<div class="center">
     <blockquote class="text-center">@ViewBag.CurrentQuote</blockquote>
 </div>
+
 <div class="center">
     <input type="button" value="More Wisdom" onclick="location.href='@Url.Action("Index", "Kanye")'" />
 </div>

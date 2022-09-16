@@ -52,7 +52,7 @@ namespace PTAP.Web.Controllers
 
             if (_kanyeClient.Quote != null)
             {
-                ViewBag.CurrentQuote = _kanyeClient.Quote.QuoteText;
+                ViewBag.CurrentQuote = _kanyeClient.Quote.QuoteText;                
                 _context.Add(_kanyeClient.Quote);
                 await _context.SaveChangesAsync();
             }

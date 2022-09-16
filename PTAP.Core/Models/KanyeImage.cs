@@ -18,9 +18,9 @@ namespace PTAP.Core.Models
 
         public KanyeImage(byte[] bytes)
         {
-            using (var ms = new MemoryStream(bytes))
+            using (var memoryStream = new MemoryStream(bytes))
             {
-                Image = new Bitmap(ms);
+                Image = new Bitmap(memoryStream);
             }
         }
     }

@@ -14,17 +14,17 @@ namespace PTAP.Infrastructure
 {
     public class KanyeClient
     {
-        private readonly HttpClient _httpClient;        
+        private readonly HttpClient _httpClient;
         private readonly string _apiAddress = "https://localhost:7219/KanyeAPI";
+
         public bool IsConfigured { get; set; }
         public KanyeImage Image { get; set; }
-
-        public Quote Quote { get; set; }        
+        public Quote Quote { get; set; }
 
         public KanyeClient(HttpClient http)
         {
             _httpClient = http;
-            ConfigureClient();            
+            ConfigureClient();
         }
 
         private void ConfigureClient()
