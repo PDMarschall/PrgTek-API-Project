@@ -14,4 +14,8 @@
     <ProjectReference Include="..\PTAP.Infrastructure\PTAP.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Images\" />
+  </ItemGroup>
+
 </Project>
