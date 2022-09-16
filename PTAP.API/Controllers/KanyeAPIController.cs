@@ -11,7 +11,6 @@ namespace PTAP.API.Controllers
         [HttpGet]
         public IActionResult GetImage()
         {
-            GetRandomImage();
             FileStream stream = System.IO.File.Open(GetRandomImage(), FileMode.Open);
             return File(stream, "image/jpeg");
         }
