@@ -2,7 +2,7 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
-import Typed from 'typed.js';
+import Typed from './lib/typed.js/typed.js';
 
 var options = {
     strings: ['<i>First</i> sentence.', '&amp; a second sentence.'],
