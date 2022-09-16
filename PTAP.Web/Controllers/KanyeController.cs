@@ -48,6 +48,8 @@ namespace PTAP.Web.Controllers
 
         private async Task GetAndDisplayQuote()
         {
+            await _kanyeClient.CreateAsync();
+
             if (_kanyeClient.Quote != null)
             {
                 ViewBag.CurrentQuote = _kanyeClient.Quote.QuoteText;
