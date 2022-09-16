@@ -2,17 +2,15 @@
 
 namespace PTAP.API.Controllers
 {
-    public class KanyeAPIController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class KanyeAPIController : ControllerBase
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         [HttpGet]
         public IActionResult GetImage()
         {
-            FileStream stream = System.IO.File.Open(@"E:\\Test.jpg", FileMode.Open);
+            FileStream stream = System.IO.File.Open(@"./Images/Kanye-West.jpg", FileMode.Open);
             return File(stream, "image/jpeg");
         }
     }
