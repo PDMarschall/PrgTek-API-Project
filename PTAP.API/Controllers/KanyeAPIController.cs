@@ -11,16 +11,36 @@ namespace PTAP.API.Controllers
         [HttpGet]
         public IActionResult GetImage()
         {
-            FileStream stream = System.IO.File.Open(GetRandomImage(), FileMode.Open);
-            return File(stream, "image/jpeg");
+            string imagePath = GetRandomImagePath();
+
+            if (imagePath != "")
+            {
+                return File(GetRandomImage(imagePath), "image/jpeg");
+            }
+
+            return NotFound();
+
         }
 
-        private string GetRandomImage()
+        private FileStream GetRandomImage(string path)
         {
-            DirectoryInfo directoryInfo = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, @"Images/"));
-            var files = directoryInfo.GetFiles();
+            FileStream image = System.IO.File.Open(path, FileMode.Open);
+            return image;
+        }
 
-            return files[_random.Next(0, files.Length)].FullName;
+        private string GetRandomImagePath()
+        {
+            DirectoryInfo imageDirectoryInfo = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, @"Images/"));
+            FileInfo[] imagesFileInfo = imageDirectoryInfo.GetFiles();
+
+            if (imagesFileInfo.Count() > 0)
+            {
+                string randomImagePath = imagesFileInfo[_random.Next(0, imagesFileInfo.Length)].FullName;
+                return randomImagePath;
+            }
+
+            return "";
+
         }
     }
 }

@@ -38,8 +38,19 @@ namespace PTAP.Infrastructure
             if (_httpClient.BaseAddress != null)
             {
                 Quote = await GetQuoteAsync(_httpClient.BaseAddress.ToString());
-                Image = new KanyeImage(await _httpClient.GetByteArrayAsync(_apiAddress));
+                Image = await GetImageAsync(_apiAddress);
             }
+        }
+
+        private async Task<KanyeImage> GetImageAsync(string path)
+        {
+            KanyeImage image = null;
+            HttpResponseMessage response = await _httpClient.GetAsync(path);
+            if (response.IsSuccessStatusCode)
+            {
+                image = new KanyeImage(await _httpClient.GetByteArrayAsync(_apiAddress));
+            }
+            return image;
         }
 
         private async Task<Quote> GetQuoteAsync(string path)
