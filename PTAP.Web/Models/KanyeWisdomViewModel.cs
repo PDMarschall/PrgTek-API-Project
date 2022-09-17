@@ -5,9 +5,7 @@ namespace PTAP.Web.Models
 {
     public class KanyeWisdomViewModel
     {
-        [Required]
         public Quote WisdomText { get; set; }
-        [Required]
         public KanyeImage WisdomImage { get; set; }
         public string DisplayString { get; set; }
 
@@ -15,6 +13,7 @@ namespace PTAP.Web.Models
         {
             WisdomText = wisdomText;
             WisdomImage = wisdomImage;
+
             if (wisdomImage != null)
             {
                 DisplayString = GetDisplayString(wisdomImage.ImageBytes);

@@ -32,6 +32,7 @@ namespace PTAP.Web.Controllers
         public async Task<IActionResult> Index()
         {
             KanyeWisdomViewModel viewModel = await GetKanyeViewModel();
+            PersistWisdom(viewModel);
             return View(viewModel);
         }
 
@@ -47,11 +48,15 @@ namespace PTAP.Web.Controllers
             return View(await _context.Quote.ToListAsync());
         }
 
-
         private async Task<KanyeWisdomViewModel> GetKanyeViewModel()
         {
             await _kanyeClient.GetWisdom();
             return new KanyeWisdomViewModel(_kanyeClient.Quote, _kanyeClient.Image);
+        }
+
+        private void PersistWisdom(KanyeWisdomViewModel kanyeWisdom)
+        {
+            _context.Add(kanyeWisdom.WisdomText);
         }
 
 
