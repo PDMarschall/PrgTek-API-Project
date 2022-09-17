@@ -15,31 +15,21 @@ namespace PTAP.Infrastructure
     public class KanyeClient
     {
         private readonly HttpClient _httpClient;
-        private readonly string _apiAddress = "https://localhost:7219/KanyeAPI";
+        private readonly string _imageApiAddress = "https://localhost:7219/KanyeAPI";
+        private readonly string _quoteApiAddress = "https://api.kanye.rest/";
 
-        public bool IsConfigured { get; set; }
         public KanyeImage Image { get; set; }
         public Quote Quote { get; set; }
 
         public KanyeClient(HttpClient http)
         {
             _httpClient = http;
-            ConfigureClient();
         }
 
-        private void ConfigureClient()
+        public async Task GetWisdom()
         {
-            _httpClient.BaseAddress = new Uri("https://api.kanye.rest/");
-            IsConfigured = true;
-        }
-
-        private async Task GetWisdom()
-        {
-            if (_httpClient.BaseAddress != null)
-            {
-                Quote = await GetQuoteAsync(_httpClient.BaseAddress.ToString());
-                Image = await GetImageAsync(_apiAddress);
-            }
+                Quote = await GetQuoteAsync(_quoteApiAddress);
+                Image = await GetImageAsync(_imageApiAddress);
         }
 
         private async Task<KanyeImage> GetImageAsync(string path)
@@ -48,7 +38,7 @@ namespace PTAP.Infrastructure
             HttpResponseMessage response = await _httpClient.GetAsync(path);
             if (response.IsSuccessStatusCode && response.StatusCode != System.Net.HttpStatusCode.NoContent)
             {
-                image = new KanyeImage(await _httpClient.GetByteArrayAsync(_apiAddress));
+                image = new KanyeImage(await _httpClient.GetByteArrayAsync(_imageApiAddress));
             }
             return image;
         }
@@ -62,12 +52,6 @@ namespace PTAP.Infrastructure
                 quote = await response.Content.ReadFromJsonAsync<Quote>();
             }
             return quote;
-        }
-
-
-        public async Task CreateAsync()
-        {
-            await GetWisdom();
         }
     }
 }

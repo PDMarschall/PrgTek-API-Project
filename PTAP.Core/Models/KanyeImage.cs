@@ -10,14 +10,11 @@ namespace PTAP.Core.Models
     public class KanyeImage
     {
         public Bitmap Image { get; set; }
-
-        public KanyeImage(Bitmap image)
-        {
-            Image = image;
-        }
+        public byte[] ImageBytes { get; }
 
         public KanyeImage(byte[] bytes)
         {
+            ImageBytes = bytes;
             using (var memoryStream = new MemoryStream(bytes))
             {
                 Image = new Bitmap(memoryStream);

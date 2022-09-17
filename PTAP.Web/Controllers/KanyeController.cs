@@ -34,7 +34,7 @@ namespace PTAP.Web.Controllers
 
         public async Task<IActionResult> DownloadList()
         {
-            string path = GetPath();
+            string path = GetQuoteListPath();
 
             MemoryStream fileContents = await SerializeQuotesForDownloadAsync(path);
 
@@ -46,9 +46,12 @@ namespace PTAP.Web.Controllers
             return View(await _context.Quote.ToListAsync());
         }
 
+
+
+
         private async Task GetAndDisplayQuote()
         {
-            await _kanyeClient.CreateAsync();
+            await _kanyeClient.GetWisdom();
 
             if (_kanyeClient.Quote != null)
             {
@@ -94,7 +97,7 @@ namespace PTAP.Web.Controllers
             };
         }
 
-        private string GetPath()
+        private string GetQuoteListPath()
         {
             return Path.Combine(Environment.CurrentDirectory, @"wwwroot/files/", "Quote_List.json");
         }
