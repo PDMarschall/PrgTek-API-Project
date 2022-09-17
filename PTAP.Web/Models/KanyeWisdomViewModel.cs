@@ -1,5 +1,4 @@
-﻿using Microsoft.Build.Framework;
-using PTAP.Core.Models;
+﻿using PTAP.Core.Models;
 
 namespace PTAP.Web.Models
 {

@@ -1,19 +1,10 @@
-﻿using PTAP.Core.Models;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Net.Http;
+﻿using PTAP.Core.Interfaces;
+using PTAP.Core.Models;
 using System.Net.Http.Json;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace PTAP.Infrastructure
 {
-    public class KanyeClient
+    public class KanyeClientDefault : IKanyeClient
     {
         private readonly HttpClient _httpClient;
         private readonly string _imageApiAddress = "https://localhost:7219/KanyeAPI";
@@ -22,15 +13,15 @@ namespace PTAP.Infrastructure
         public KanyeImage Image { get; set; }
         public KanyeQuote Quote { get; set; }
 
-        public KanyeClient(HttpClient http)
+        public KanyeClientDefault(HttpClient http)
         {
             _httpClient = http;
         }
 
         public async Task GetWisdom()
         {
-                Quote = await GetQuoteAsync(_quoteApiAddress);
-                Image = await GetImageAsync(_imageApiAddress);
+            Quote = await GetQuoteAsync(_quoteApiAddress);
+            Image = await GetImageAsync(_imageApiAddress);
         }
 
         private async Task<KanyeImage> GetImageAsync(string path)
@@ -57,7 +48,7 @@ namespace PTAP.Infrastructure
 
         private bool IsValidResponse(HttpResponseMessage response)
         {
-            return response.IsSuccessStatusCode && 
+            return response.IsSuccessStatusCode &&
                 response.StatusCode != System.Net.HttpStatusCode.NoContent;
         }
     }

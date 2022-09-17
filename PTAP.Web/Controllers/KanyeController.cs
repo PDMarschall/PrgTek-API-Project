@@ -1,28 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
-using NuGet.Protocol;
+using PTAP.Core.Interfaces;
 using PTAP.Core.Models;
-using PTAP.Infrastructure;
 using PTAP.Infrastructure.Data;
 using PTAP.Web.Models;
+using System.Text.Json;
 
 namespace PTAP.Web.Controllers
 {
     public class KanyeController : Controller
     {
         private readonly KanyeContext _context;
-        private readonly KanyeClient _kanyeClient;
+        private readonly IKanyeClient _kanyeClient;
         private readonly string _quoteListPath;
 
-        public KanyeController(KanyeContext context, KanyeClient kanye)
+        public KanyeController(KanyeContext context, IKanyeClient kanye)
         {
             _context = context;
             _kanyeClient = kanye;
