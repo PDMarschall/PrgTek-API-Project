@@ -62,7 +62,7 @@ namespace PTAP.Web.Controllers
 
         private async Task<MemoryStream> SerializeQuotesJsonAsync(string path)
         {
-            List<Quote> tempList = _context.Quote.ToList();
+            List<KanyeQuote> tempList = _context.Quote.ToList();
 
             await CreateQuoteJsonAsync(tempList, path);
             MemoryStream fileContents = await CopyFileToMemoryAsync(path);
@@ -70,7 +70,7 @@ namespace PTAP.Web.Controllers
             return fileContents;
         }
 
-        private async Task CreateQuoteJsonAsync(List<Quote> tempList, string path)
+        private async Task CreateQuoteJsonAsync(List<KanyeQuote> tempList, string path)
         {
             using (FileStream createStream = System.IO.File.Create(path))
             {

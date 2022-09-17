@@ -5,11 +5,11 @@ namespace PTAP.Web.Models
 {
     public class KanyeWisdomViewModel
     {
-        public Quote WisdomText { get; set; }
+        public KanyeQuote WisdomText { get; set; }
         public KanyeImage WisdomImage { get; set; }
         public string DisplayString { get; set; }
 
-        public KanyeWisdomViewModel(Quote wisdomText, KanyeImage wisdomImage)
+        public KanyeWisdomViewModel(KanyeQuote wisdomText, KanyeImage wisdomImage)
         {
             WisdomText = wisdomText;
             WisdomImage = wisdomImage;

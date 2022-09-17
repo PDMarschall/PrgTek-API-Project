@@ -14,6 +14,6 @@ namespace PTAP.Infrastructure.Data
         {
         }
 
-        public DbSet<Quote> Quote { get; set; }        
+        public DbSet<KanyeQuote> Quote { get; set; }        
     }
 }

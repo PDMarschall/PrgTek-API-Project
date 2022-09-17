@@ -20,7 +20,7 @@ namespace PTAP.Infrastructure
         private readonly string _quoteApiAddress = "https://api.kanye.rest/";
 
         public KanyeImage Image { get; set; }
-        public Quote Quote { get; set; }
+        public KanyeQuote Quote { get; set; }
 
         public KanyeClient(HttpClient http)
         {
@@ -44,13 +44,13 @@ namespace PTAP.Infrastructure
             return image;
         }
 
-        private async Task<Quote> GetQuoteAsync(string path)
+        private async Task<KanyeQuote> GetQuoteAsync(string path)
         {
-            Quote quote = null;
+            KanyeQuote quote = null;
             HttpResponseMessage response = await _httpClient.GetAsync(path);
             if (IsValidResponse(response))
             {
-                quote = await response.Content.ReadFromJsonAsync<Quote>();
+                quote = await response.Content.ReadFromJsonAsync<KanyeQuote>();
             }
             return quote;
         }

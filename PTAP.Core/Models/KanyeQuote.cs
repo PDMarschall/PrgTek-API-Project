@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PTAP.Core.Models
 {
-    public class Quote
+    public class KanyeQuote
     {
         [DisplayName("#")]
         public int Id { get; set; }
