@@ -46,7 +46,7 @@ namespace PTAP.Infrastructure
         {
             KanyeImage image = null;
             HttpResponseMessage response = await _httpClient.GetAsync(path);
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode && response.StatusCode != System.Net.HttpStatusCode.NoContent)
             {
                 image = new KanyeImage(await _httpClient.GetByteArrayAsync(_apiAddress));
             }
@@ -57,7 +57,7 @@ namespace PTAP.Infrastructure
         {
             Quote quote = null;
             HttpResponseMessage response = await _httpClient.GetAsync(path);
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode && response.StatusCode != System.Net.HttpStatusCode.NoContent)
             {
                 quote = await response.Content.ReadFromJsonAsync<Quote>();
             }
