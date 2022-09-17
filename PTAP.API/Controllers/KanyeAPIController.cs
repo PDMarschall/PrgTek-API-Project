@@ -40,7 +40,6 @@ namespace PTAP.API.Controllers
             }
 
             return "";
-
         }
     }
 }
