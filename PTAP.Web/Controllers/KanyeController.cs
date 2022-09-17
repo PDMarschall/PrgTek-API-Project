@@ -32,14 +32,13 @@ namespace PTAP.Web.Controllers
         public async Task<IActionResult> Index()
         {
             KanyeWisdomViewModel viewModel = await GetKanyeViewModel();
-            PersistWisdom(viewModel);
+            await PersistWisdom(viewModel);
             return View(viewModel);
         }
 
         public async Task<IActionResult> DownloadList()
         {
             MemoryStream fileContents = await SerializeQuotesJsonAsync(_quoteListPath);
-
             return File(fileContents, "application/json", Path.GetFileName(_quoteListPath));
         }
 
@@ -54,9 +53,10 @@ namespace PTAP.Web.Controllers
             return new KanyeWisdomViewModel(_kanyeClient.Quote, _kanyeClient.Image);
         }
 
-        private void PersistWisdom(KanyeWisdomViewModel kanyeWisdom)
+        private async Task PersistWisdom(KanyeWisdomViewModel kanyeWisdom)
         {
             _context.Add(kanyeWisdom.WisdomText);
+            await _context.SaveChangesAsync();
         }
 
 
