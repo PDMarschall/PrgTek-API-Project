@@ -31,7 +31,7 @@ namespace PTAP.API.Controllers
         private string GetRandomImagePath()
         {
             DirectoryInfo imageDirectoryInfo = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, @"Images/"));
-            FileInfo[] imagesFileInfo = imageDirectoryInfo.GetFiles();
+            FileInfo[] imagesFileInfo = imageDirectoryInfo.GetFiles().Where(x => x.Extension == ".jpg").ToArray();
 
             if (imagesFileInfo.Count() > 0)
             {
