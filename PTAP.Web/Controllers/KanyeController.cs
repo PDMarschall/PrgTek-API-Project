@@ -12,6 +12,7 @@ using NuGet.Protocol;
 using PTAP.Core.Models;
 using PTAP.Infrastructure;
 using PTAP.Infrastructure.Data;
+using PTAP.Web.Models;
 
 namespace PTAP.Web.Controllers
 {
@@ -19,26 +20,26 @@ namespace PTAP.Web.Controllers
     {
         private readonly KanyeContext _context;
         private readonly KanyeClient _kanyeClient;
+        private readonly string _quoteListPath;
 
         public KanyeController(KanyeContext context, KanyeClient kanye)
         {
             _context = context;
             _kanyeClient = kanye;
+            _quoteListPath = GetQuoteListPath();
         }
 
         public async Task<IActionResult> Index()
         {
-            await GetAndDisplayQuote();
-            return View();
+            KanyeWisdomViewModel viewModel = await GetKanyeViewModel();
+            return View(viewModel);
         }
 
         public async Task<IActionResult> DownloadList()
         {
-            string path = GetQuoteListPath();
+            MemoryStream fileContents = await SerializeQuotesForDownloadAsync(_quoteListPath);
 
-            MemoryStream fileContents = await SerializeQuotesForDownloadAsync(path);
-
-            return File(fileContents, "application/json", Path.GetFileName(path));
+            return File(fileContents, "application/json", Path.GetFileName(_quoteListPath));
         }
 
         public async Task<IActionResult> History()
@@ -47,23 +48,12 @@ namespace PTAP.Web.Controllers
         }
 
 
-
-
-        private async Task GetAndDisplayQuote()
+        private async Task<KanyeWisdomViewModel> GetKanyeViewModel()
         {
             await _kanyeClient.GetWisdom();
-
-            if (_kanyeClient.Quote != null)
-            {
-                ViewBag.CurrentQuote = _kanyeClient.Quote.QuoteText;                
-                _context.Add(_kanyeClient.Quote);
-                await _context.SaveChangesAsync();
-            }
-            else
-            {
-                ViewBag.CurrentQuote = "Quote could not be retrieved from source.";
-            }
+            return new KanyeWisdomViewModel(_kanyeClient.Quote, _kanyeClient.Image);
         }
+
 
         private async Task<MemoryStream> SerializeQuotesForDownloadAsync(string path)
         {

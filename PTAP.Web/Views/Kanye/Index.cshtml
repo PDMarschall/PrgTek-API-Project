@@ -1,12 +1,13 @@
-﻿@{
+﻿@model KanyeWisdomViewModel
+@{
     ViewData["Title"] = "Index";
 }
-<div class="center">
-    <img class="kanye-image" src="https://localhost:7219/KanyeAPI" />
+<div class="center">    
+    <img class="kanye-image" src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.WisdomImage.ImageBytes))" />
 </div>
 
 <div class="center">
-    <blockquote class="text-center">@ViewBag.CurrentQuote</blockquote>
+    <blockquote class="text-center">@Model.WisdomText</blockquote>
 </div>
 
 <div class="center">

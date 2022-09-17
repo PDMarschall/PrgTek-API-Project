@@ -16,5 +16,10 @@ namespace PTAP.Core.Models
 
         [Required, JsonPropertyName("quote"), DisplayName("Words of Wisdom")]
         public string QuoteText { get; set; }
+
+        public override string ToString()
+        {
+            return QuoteText + ".";
+        }
     }
 }

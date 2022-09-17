@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using MvcMovie.Models;
 using PTAP.Infrastructure;
 using PTAP.Infrastructure.Data;
 var builder = WebApplication.CreateBuilder(args);
@@ -17,8 +16,6 @@ var app = builder.Build();
 using (IServiceScope scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-
-    SeedData.Initialize(services);
 }
 
 // Configure the HTTP request pipeline.
@@ -38,6 +35,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Kanye}/{action=Index}/{id?}");
 
 app.Run();

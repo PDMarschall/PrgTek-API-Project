@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
@@ -36,7 +37,7 @@ namespace PTAP.Infrastructure
         {
             KanyeImage image = null;
             HttpResponseMessage response = await _httpClient.GetAsync(path);
-            if (response.IsSuccessStatusCode && response.StatusCode != System.Net.HttpStatusCode.NoContent)
+            if (IsValidResponse(response))
             {
                 image = new KanyeImage(await _httpClient.GetByteArrayAsync(_imageApiAddress));
             }
@@ -47,11 +48,17 @@ namespace PTAP.Infrastructure
         {
             Quote quote = null;
             HttpResponseMessage response = await _httpClient.GetAsync(path);
-            if (response.IsSuccessStatusCode && response.StatusCode != System.Net.HttpStatusCode.NoContent)
+            if (IsValidResponse(response))
             {
                 quote = await response.Content.ReadFromJsonAsync<Quote>();
             }
             return quote;
+        }
+
+        private bool IsValidResponse(HttpResponseMessage response)
+        {
+            return response.IsSuccessStatusCode && 
+                response.StatusCode != System.Net.HttpStatusCode.NoContent;
         }
     }
 }
