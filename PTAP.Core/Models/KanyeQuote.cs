@@ -14,7 +14,14 @@ namespace PTAP.Core.Models
 
         public override string ToString()
         {
-            return QuoteText + ".";
+            if (QuoteText.Last() == '.')
+            {
+                return QuoteText;
+            }
+            else
+            {
+                return QuoteText + ".";
+            }
         }
     }
 }
