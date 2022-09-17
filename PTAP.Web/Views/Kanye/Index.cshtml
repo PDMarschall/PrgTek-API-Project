@@ -3,7 +3,7 @@
     ViewData["Title"] = "Index";
 }
 <div class="center">    
-    <img class="kanye-image" src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.WisdomImage.ImageBytes))" />
+    <img class="kanye-image" src="@String.Format("data:image/png;base64,{0}", Model.DisplayString)" />
 </div>
 
 <div class="center">
