@@ -15,14 +15,14 @@ namespace PTAP.API.Controllers
 
             if (imagePath != "")
             {
-                return File(GetImage(imagePath), "image/jpeg");
+                return File(GetImageFromPath(imagePath), "image/jpeg");
             }
 
             return NoContent();
 
         }
 
-        private FileStream GetImage(string path)
+        private FileStream GetImageFromPath(string path)
         {
             FileStream image = System.IO.File.Open(path, FileMode.Open);
             return image;
